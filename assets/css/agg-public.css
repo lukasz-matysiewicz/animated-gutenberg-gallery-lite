@@ -1,0 +1,77 @@
+#aggGallery {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+}
+
+#aggGallery-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#aggGallery-image {
+    max-width: 90%;
+    max-height: 90%;
+    margin: auto;
+    display: block;
+    object-fit: contain;
+}
+
+#aggGallery-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10000;
+}
+
+#aggGallery-prev, 
+#aggGallery-next {
+    position: absolute;
+    top: 50%;
+    color: #fff;
+    font-size: 60px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    z-index: 10000;
+}
+
+#aggGallery-prev {
+    left: 30px;
+}
+
+#aggGallery-next {
+    right: 30px;
+}
+
+.wp-block-image {
+    cursor: pointer;
+}
+
+.wp-block-image {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: box-shadow 0.3s ease;
+}
+
+.wp-block-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
