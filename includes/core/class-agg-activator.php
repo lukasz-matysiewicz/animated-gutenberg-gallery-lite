@@ -1,22 +1,13 @@
 <?php
-/**
- * @package    AnimatedGutenbergGallery
- * @author     Matysiewicz Studio <support@matysiewicz.studio>
- * @copyright  Copyright (c) 2024 Matysiewicz Studio
- * 
- * This is a commercial plugin, licensed under CodeCanyon's Regular/Extended License.
- * For full license details see: https://codecanyon.net/licenses/terms/regular
- */
-
 namespace AGG\Core;
 
 class AGG_Activator {
     public static function activate() {
         $default_options = array(
-            'animation_type' => 'fade-up',
+            'animation_type' => 'fade',
             'animation_style' => 'group',
-            'animation_duration' => 2,
-            'hover_effect' => 'zoom'
+            'animation_duration' => 1.5,
+            'hover_effect' => 'none'
         );
 
         // Only add option if it doesn't exist

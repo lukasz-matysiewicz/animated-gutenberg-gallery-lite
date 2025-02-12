@@ -1,10 +1,4 @@
 <?php
-/**
- * @package    AnimatedGutenbergGallery
- * @author     Matysiewicz Studio <support@matysiewicz.studio>
- * @copyright  Copyright (c) 2024 Matysiewicz Studio
- */
-
 if (!defined('ABSPATH') || !current_user_can('manage_options')) {
     exit;
 }
@@ -13,16 +7,14 @@ if (!defined('ABSPATH') || !current_user_can('manage_options')) {
 wp_nonce_field('agg_settings_action', 'agg_settings_nonce');
 
 $default_settings = array(
-    'animation_type' => 'fade-up',
+    'animation_type' => 'fade',
     'animation_style' => 'group',
-    'animation_duration' => 2,
-    'hover_effect' => 'zoom'
+    'animation_duration' => 1.5,
+    'hover_effect' => 'none'
 );
 
 // Get settings with defaults
 $settings = get_option('agg_settings', $default_settings);
-
-// Ensure all required settings exist
 $settings = wp_parse_args($settings, $default_settings);
 ?>
 
@@ -30,9 +22,9 @@ $settings = wp_parse_args($settings, $default_settings);
     <!-- Header Section -->
     <div class="agg-header">
         <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/logo-agg.webp'); ?>" 
-             alt="<?php echo esc_attr__('Animated Gutenberg Gallery Logo', 'animated-gutenberg-gallery'); ?>" 
+             alt="<?php echo esc_attr__('Animated Gutenberg Gallery Logo', 'animated-gutenberg-gallery-lite'); ?>" 
              class="agg-logo">
-        <h1 class="agg-admin-title"><?php esc_html_e('Animated Gutenberg Gallery', 'animated-gutenberg-gallery'); ?></h1>
+        <h1 class="agg-admin-title"><?php esc_html_e('Animated Gutenberg Gallery Lite', 'animated-gutenberg-gallery-lite'); ?></h1>
     </div>
 
     <form method="post" action="options.php">
@@ -43,142 +35,167 @@ $settings = wp_parse_args($settings, $default_settings);
             <div class="agg-main-settings">
                 <div class="agg-section">
                     <!-- Animation Effects Section -->
-                    <h2 class="agg-section-title"><?php esc_html_e('Animation Effects', 'animated-gutenberg-gallery'); ?></h2>
+                    <h2 class="agg-section-title"><?php esc_html_e('Animation Effects', 'animated-gutenberg-gallery-lite'); ?></h2>
                     <div class="agg-button-group">
                         <?php
                         $effects = [
-                            'none' => esc_html__('None', 'animated-gutenberg-gallery'),
-                            'fade' => esc_html__('Fade In', 'animated-gutenberg-gallery'),
-                            'fade-up' => esc_html__('Fade Up', 'animated-gutenberg-gallery'),
-                            'fade-left' => esc_html__('Fade Left', 'animated-gutenberg-gallery'),
-                            'zoom' => esc_html__('Zoom In', 'animated-gutenberg-gallery'),
-                            'alternate-scroll' => esc_html__('Alternate Scroll', 'animated-gutenberg-gallery')
+                            'fade' => [
+                                'label' => esc_html__('Fade In', 'animated-gutenberg-gallery-lite'),
+                                'premium' => false
+                            ],
+                            'fade-up' => [
+                                'label' => esc_html__('Fade Up', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ],
+                            'fade-left' => [
+                                'label' => esc_html__('Fade Left', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ],
+                            'zoom' => [
+                                'label' => esc_html__('Zoom In', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ],
+                            'alternate-scroll' => [
+                                'label' => esc_html__('Alternate Scroll', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ]
                         ];
-                        foreach ($effects as $value => $label) : ?>
-                            <button type="button" 
-                                    class="agg-button <?php echo $settings['animation_type'] === $value ? 'active' : ''; ?>"
-                                    data-value="<?php echo esc_attr($value); ?>">
-                                <?php echo esc_html($label); ?>
+                        
+                        foreach ($effects as $value => $effect) : 
+                            $is_premium = $effect['premium'];
+                            $disabled = $is_premium ? 'disabled' : '';
+                            $premium_class = $is_premium ? 'agg-premium-feature' : '';
+                            $active_class = ($value === 'fade') ? 'active' : ''; // Make fade always active
+                        ?>
+                           <button type="button" 
+                                    class="agg-button <?php echo esc_attr($active_class . ' ' . $premium_class); ?>"
+                                    data-value="<?php echo esc_attr($value); ?>"
+                                    <?php echo $disabled; ?>>
+                                <?php echo esc_html($effect['label']); ?>
+                                <?php if ($is_premium) : ?>
+                                    <span class="agg-premium-badge"><?php esc_html_e('PRO', 'animated-gutenberg-gallery-lite'); ?></span>
+                                <?php endif; ?>
                             </button>
                         <?php endforeach; ?>
                     </div>
                     <input type="hidden" name="agg_settings[animation_type]" id="animation_type" value="<?php echo esc_attr($settings['animation_type']); ?>">
 
                     <!-- Animation Style Section -->
-                    <h2 class="agg-section-title"><?php esc_html_e('Animation Style', 'animated-gutenberg-gallery'); ?></h2>
+                    <h2 class="agg-section-title"><?php esc_html_e('Animation Style', 'animated-gutenberg-gallery-lite'); ?></h2>
                     <div class="agg-button-group">
                         <?php
                         $animation_styles = [
-                            'group' => esc_html__('Group Animation', 'animated-gutenberg-gallery'),
-                            'sequence' => esc_html__('Sequence Animation', 'animated-gutenberg-gallery')
+                            'group' => [
+                                'label' => esc_html__('Group Animation', 'animated-gutenberg-gallery-lite'),
+                                'premium' => false
+                            ],
+                            'sequence' => [
+                                'label' => esc_html__('Sequence Animation', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ]
                         ];
-                        foreach ($animation_styles as $value => $label) : ?>
+                        foreach ($animation_styles as $value => $style) : 
+                            $is_premium = $style['premium'];
+                            $disabled = $is_premium ? 'disabled' : '';
+                            $premium_class = $is_premium ? 'agg-premium-feature' : '';
+                            $active_class = ($settings['animation_style'] === $value && !$is_premium) ? 'active' : '';
+                            $active_class = ($value === 'group') ? 'active' : ''; // Make fade always active
+                        ?>
                             <button type="button" 
-                                    class="agg-button <?php echo $settings['animation_style'] === $value ? 'active' : ''; ?>"
-                                    data-value="<?php echo esc_attr($value); ?>">
-                                <?php echo esc_html($label); ?>
+                                    class="agg-button <?php echo esc_attr($active_class . ' ' . $premium_class); ?>"
+                                    data-value="<?php echo esc_attr($value); ?>"
+                                    <?php echo $disabled; ?>>
+                                <?php echo esc_html($style['label']); ?>
+                                <?php if ($is_premium) : ?>
+                                    <span class="agg-premium-badge"><?php esc_html_e('PRO', 'animated-gutenberg-gallery-lite'); ?></span>
+                                <?php endif; ?>
                             </button>
                         <?php endforeach; ?>
                     </div>
-                    <input type="hidden" name="agg_settings[animation_style]" id="animation_style" value="<?php echo esc_attr($settings['animation_style'] ?? 'group'); ?>">
+                    <input type="hidden" name="agg_settings[animation_style]" id="animation_style" value="<?php echo esc_attr($settings['animation_style']); ?>">
 
-                    <!-- Animation Timing Section -->
-                    <h2 class="agg-section-title"><?php esc_html_e('Animation Timing', 'animated-gutenberg-gallery'); ?></h2>
-                    <div class="agg-input-group">
-                        <label class="agg-input-label">
-                            <?php esc_html_e('Duration (seconds)', 'animated-gutenberg-gallery'); ?>
-                        </label>
+                    <!-- Animation Duration Section -->
+                    <h2 class="agg-section-title"><?php esc_html_e('Animation Duration', 'animated-gutenberg-gallery-lite'); ?></h2>
+                    <div class="agg-input-group agg-premium-control">
                         <input type="number" 
-                            class="agg-input agg-duration-input"
-                            name="agg_settings[animation_duration]" 
-                            value="<?php echo esc_attr($settings['animation_duration']); ?>"
-                            step="0.1"
-                            min="0.1"
-                            max="3">
-                        <span class="agg-input-hint"><?php echo esc_html__('Min: 0.1s, Max: 3s', 'animated-gutenberg-gallery'); ?></span>
+                            value="0.1"
+                            disabled
+                            class="agg-input agg-duration-input">
+                        <span class="agg-input-hint"><?php esc_html_e('Fixed in Lite version', 'animated-gutenberg-gallery-lite'); ?></span>
                     </div>
 
                     <!-- Hover Effects Section -->
-                    <h2 class="agg-section-title"><?php esc_html_e('Hover Effects', 'animated-gutenberg-gallery'); ?></h2>
+                    <h2 class="agg-section-title agg-premium-title"><?php esc_html_e('Hover Effects', 'animated-gutenberg-gallery-lite'); ?>
+                        <span class="agg-premium-badge"><?php esc_html_e('PRO', 'animated-gutenberg-gallery-lite'); ?></span>
+                    </h2>
                     <div class="agg-button-group">
                         <?php
                         $hover_effects = [
-                            'none' => esc_html__('None', 'animated-gutenberg-gallery'),
-                            'zoom' => esc_html__('Zoom', 'animated-gutenberg-gallery'),
-                            'lift' => esc_html__('Lift Up', 'animated-gutenberg-gallery'),
-                            'tilt' => esc_html__('3D Tilt', 'animated-gutenberg-gallery')
+                            'none' => [
+                                'label' => esc_html__('None', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true,
+                                'active' => true // Make none selected by default
+                            ],
+                            'zoom' => [
+                                'label' => esc_html__('Zoom', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ],
+                            'lift' => [
+                                'label' => esc_html__('Lift Up', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ],
+                            'tilt' => [
+                                'label' => esc_html__('3D Tilt', 'animated-gutenberg-gallery-lite'),
+                                'premium' => true
+                            ]
                         ];
-                        foreach ($hover_effects as $value => $label) : ?>
+                        foreach ($hover_effects as $value => $effect) : 
+                            $active_class = (!empty($effect['active'])) ? 'active' : '';
+                        ?>
                             <button type="button" 
-                                    class="agg-button <?php echo $settings['hover_effect'] === $value ? 'active' : ''; ?>"
-                                    data-value="<?php echo esc_attr($value); ?>">
-                                <?php echo esc_html($label); ?>
+                                    class="agg-button agg-premium-feature <?php echo esc_attr($active_class); ?>"
+                                    data-value="<?php echo esc_attr($value); ?>"
+                                    disabled>
+                                <?php echo esc_html($effect['label']); ?>
+                                <span class="agg-premium-badge"><?php esc_html_e('PRO', 'animated-gutenberg-gallery-lite'); ?></span>
                             </button>
                         <?php endforeach; ?>
                     </div>
-                    <input type="hidden" name="agg_settings[hover_effect]" id="hover_effect" value="<?php echo esc_attr($settings['hover_effect']); ?>">
 
-                    <div class="agg-save-reminder">
-                        <p><?php esc_html_e('Remember to save settings after making changes', 'animated-gutenberg-gallery'); ?></p>
+                    <!-- Upgrade Notice -->
+                    <div class="agg-upgrade-notice">
+                        <h3><?php esc_html_e('Unlock Premium Features', 'animated-gutenberg-gallery-lite'); ?></h3>
+                        <ul>
+                            <li><?php esc_html_e('5 Animation Effects', 'animated-gutenberg-gallery-lite'); ?></li>
+                            <li><?php esc_html_e('Sequential Animation Style', 'animated-gutenberg-gallery-lite'); ?></li>
+                            <li><?php esc_html_e('Customizable Animation Duration', 'animated-gutenberg-gallery-lite'); ?></li>
+                            <li><?php esc_html_e('3 Hover Effects', 'animated-gutenberg-gallery-lite'); ?></li>
+                        </ul>
+                        <a href="https://matysiewicz.studio/animated-gutenberg-gallery" target="_blank" class="button button-primary">
+                            <?php esc_html_e('Upgrade to Premium', 'animated-gutenberg-gallery-lite'); ?>
+                        </a>
                     </div>
 
-                    <?php submit_button(esc_html__('Save Changes', 'animated-gutenberg-gallery')); ?>
+                    <?php submit_button(__('Save Changes', 'animated-gutenberg-gallery-lite')); ?>
                 </div>
             </div>
 
             <!-- Preview Section -->
             <div class="agg-preview-section">
-                <h2 class="agg-section-title"><?php esc_html_e('Live Preview', 'animated-gutenberg-gallery'); ?></h2>
-                <div class="agg-preview-grid">
-                    <div class="agg-preview-column">
-                        <div class="agg-preview-item" id="preview-1">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview.webp'); ?>" alt="<?php echo esc_attr__('Preview 1', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-2">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview2.webp'); ?>" alt="<?php echo esc_attr__('Preview 2', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-3">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview3.webp'); ?>" alt="<?php echo esc_attr__('Preview 3', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-7">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview.webp'); ?>" alt="<?php echo esc_attr__('Preview 7', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-8">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview2.webp'); ?>" alt="<?php echo esc_attr__('Preview 8', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-9">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview3.webp'); ?>" alt="<?php echo esc_attr__('Preview 9', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                    </div>
-                    <div class="agg-preview-column">
-                        <div class="agg-preview-item" id="preview-4">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview4.webp'); ?>" alt="<?php echo esc_attr__('Preview 4', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-5">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview5.webp'); ?>" alt="<?php echo esc_attr__('Preview 5', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-6">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview6.webp'); ?>" alt="<?php echo esc_attr__('Preview 6', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-10">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview4.webp'); ?>" alt="<?php echo esc_attr__('Preview 10', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-11">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview5.webp'); ?>" alt="<?php echo esc_attr__('Preview 11', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                        <div class="agg-preview-item" id="preview-12">
-                            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/preview6.webp'); ?>" alt="<?php echo esc_attr__('Preview 12', 'animated-gutenberg-gallery'); ?>">
-                        </div>
-                    </div>
-                </div>
+                <h2 class="agg-section-title"><?php esc_html_e('Live Preview', 'animated-gutenberg-gallery-lite'); ?></h2>
+                <!-- Preview content here -->
             </div>
         </div>
     </form>
 
     <footer class="agg-footer">
         <p>
-            <?php echo esc_html__('Need help? Contact support at', 'animated-gutenberg-gallery'); ?>
-            <a href="mailto:support@matysiewicz.studio">support@matysiewicz.studio</a>
+            <?php 
+            printf(
+                __('Need help? Contact support at %s', 'animated-gutenberg-gallery-lite'),
+                '<a href="mailto:support@matysiewicz.studio">support@matysiewicz.studio</a>'
+            );
+            ?>
         </p>
     </footer>
 </div>

@@ -11,9 +11,8 @@ const withGalleryControls = createHigherOrderComponent((BlockEdit) => {
 
         const { attributes, setAttributes } = props;
         
-        // Default both features to ON if not set
+        // Only lightbox toggle in lite version
         const lightboxEnabled = attributes.aggLightbox !== false;
-        const animationsEnabled = attributes.aggAnimations !== false;
 
         return wp.element.createElement(
             wp.element.Fragment,
@@ -24,16 +23,11 @@ const withGalleryControls = createHigherOrderComponent((BlockEdit) => {
                 null,
                 wp.element.createElement(
                     PanelBody,
-                    { title: __('Gallery Effects', 'animated-gutenberg-gallery') },
+                    { title: __('Gallery Effects', 'animated-gutenberg-gallery-lite') },
                     wp.element.createElement(ToggleControl, {
-                        label: __('Enable Lightbox', 'animated-gutenberg-gallery'),
+                        label: __('Enable Lightbox', 'animated-gutenberg-gallery-lite'),
                         checked: lightboxEnabled,
                         onChange: (value) => setAttributes({ aggLightbox: value })
-                    }),
-                    wp.element.createElement(ToggleControl, {
-                        label: __('Enable Animations', 'animated-gutenberg-gallery'),
-                        checked: animationsEnabled,
-                        onChange: (value) => setAttributes({ aggAnimations: value })
                     })
                 )
             )

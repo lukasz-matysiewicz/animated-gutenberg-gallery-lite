@@ -1,14 +1,5 @@
 <?php
-/**
- * @package    AnimatedGutenbergGallery
- * @author     Matysiewicz Studio <support@matysiewicz.studio>
- * @copyright  Copyright (c) 2024 Matysiewicz Studio
- * 
- * This is a commercial plugin, licensed under CodeCanyon's Regular/Extended License.
- * For full license details see: https://codecanyon.net/licenses/terms/regular
- */
-
-namespace AGG\Core;
+namespace AGGL\Core;
 
 class AGG_Assets {
     public function __construct() {
@@ -35,32 +26,13 @@ class AGG_Assets {
             true
         );
 
-        // Register Lenis Scroll
-        wp_enqueue_script(
-            'lenis',
-            'https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.27/bundled/lenis.min.js',
-            [],
-            '1.0.27',
-            true
-        );
-
-        // Get default settings
+        // Get settings
         $settings = get_option('agg_settings', array(
-            'animation_type' => 'fade-up',
+            'animation_type' => 'fade',
             'animation_style' => 'group',
-            'animation_duration' => 2,
-            'animation_stagger' => 0.2,
-            'hover_effect' => 'zoom'
+            'animation_duration' => 1.5,
+            'hover_effect' => 'none'
         ));
-
-        // Register shared animations
-        wp_enqueue_script(
-            'agg-animations',
-            AGG_PLUGIN_URL . 'assets/js/agg-animations.js',
-            ['gsap', 'gsap-scrolltrigger'],
-            AGG_VERSION,
-            true
-        );
 
         // Plugin CSS
         wp_enqueue_style(
@@ -74,7 +46,7 @@ class AGG_Assets {
         wp_enqueue_script(
             'agg-public',
             AGG_PLUGIN_URL . 'assets/js/agg-public.js',
-            ['jquery', 'gsap', 'gsap-scrolltrigger', 'agg-animations', 'lenis'],
+            ['jquery', 'gsap', 'gsap-scrolltrigger'],
             AGG_VERSION,
             true
         );
@@ -84,34 +56,7 @@ class AGG_Assets {
     }
 
     public function register_admin_assets($hook) {
-        if (strpos($hook, 'animated-gutenberg-gallery') !== false) {
-            // Register GSAP for admin
-            wp_enqueue_script(
-                'gsap',
-                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
-                [],
-                '3.12.2',
-                true
-            );
-
-            // Register ScrollTrigger for admin
-            wp_enqueue_script(
-                'gsap-scrolltrigger',
-                'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
-                ['gsap'],
-                '3.12.2',
-                true
-            );
-
-            // Register shared animations
-            wp_enqueue_script(
-                'agg-animations',
-                AGG_PLUGIN_URL . 'assets/js/agg-animations.js',
-                ['gsap', 'gsap-scrolltrigger'],
-                AGG_VERSION,
-                true
-            );
-
+        if (strpos($hook, 'animated-gutenberg-gallery-lite') !== false) {
             // Admin styles
             wp_enqueue_style(
                 'agg-admin',
@@ -124,22 +69,18 @@ class AGG_Assets {
             wp_enqueue_script(
                 'agg-admin',
                 AGG_PLUGIN_URL . 'assets/js/agg-admin.js',
-                ['jquery', 'gsap', 'gsap-scrolltrigger', 'agg-animations'],
+                ['jquery'],
                 AGG_VERSION,
                 true
             );
 
-            // Get settings for admin
-            $settings = get_option('agg_settings', array(
-                'animation_type' => 'fade-up',
-                'animation_style' => 'group',
-                'animation_duration' => 2,
-                'animation_stagger' => 0.2,
-                'hover_effect' => 'zoom'
+            // Localize script for premium features
+            wp_localize_script('agg-admin', 'aggL10n', array(
+                'upgradeTitle' => __('Upgrade to Premium', 'animated-gutenberg-gallery-lite'),
+                'upgradeMessage' => __('Get access to more animations and effects!', 'animated-gutenberg-gallery-lite'),
+                'upgradeButton' => __('Learn More', 'animated-gutenberg-gallery-lite'),
+                'premiumUrl' => 'https://matysiewicz.studio/animated-gutenberg-gallery'
             ));
-
-            // Pass settings to admin JS
-            wp_localize_script('agg-admin', 'aggSettings', $settings);
         }
     }
 }
