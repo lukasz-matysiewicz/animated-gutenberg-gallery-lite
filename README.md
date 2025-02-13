@@ -1,110 +1,61 @@
-# === Animated Gutenberg Gallery ===
+# === Animated Gutenberg Gallery Lite ===
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 1.2.5
-**License:** Commercial License ([See License Terms](#licensing))  
+Stable tag: 1.0.0
+License: GPL v2 or later
 
-# Animated Gutenberg Gallery
+# Animated Gutenberg Gallery Lite
 
-Beautiful GSAP animations for WordPress Gutenberg gallery blocks.
+Add beautiful animations to WordPress Gutenberg gallery blocks.
 
 ## Description
-Add professional animations and lightbox functionality to your WordPress gallery blocks with GSAP animations.
+Transform your WordPress gallery blocks with smooth fade-in animations and lightbox functionality.
 
-## Actions & Filters
-- `agg_animation_options` - Modify available animation options
-- `agg_hover_effects` - Modify available hover effects
-- `agg_gallery_settings` - Filter gallery settings before output
+### Features in Lite Version:
+- Fade-in animation
+- Group animation style
+- Fixed animation duration (0.5s)
+- Lightbox functionality
+- Compatible with all WordPress themes
+- Easy to use - no configuration needed
 
+### Premium Version Features:
+✨ Additional features available in the premium version:
+- Multiple animation effects (Fade Up, Fade Left, Zoom In, Alternate Scroll)
+- Sequential animation style
+- Customizable animation duration
+- Hover effects (Zoom, Lift Up, 3D Tilt)
+- Priority support
 
-## Installation & Activation  
-1. **Download & Install**  
-   - Purchase the plugin from [Matysiewicz Studio](https://matysiewicz.studio).  
-   - Download the `.zip` file from your account dashboard.  
-   - Upload the plugin via **Plugins > Add New > Upload Plugin** in WordPress.  
-   - Click **Activate Plugin**.  
+[Get Premium Version](https://matysiewicz.studio/animated-gutenberg-gallery)
 
-2. **License Activation (Required)**  
-   - After activation, you'll be prompted to **enter your license key**.  
-   - Enter the key provided in your account after purchase.  
-   - Click **Activate** to enable updates & support.  
-
-💡 **Note:** You must activate the license to receive automatic updates & support.  
+## Installation
+1. Upload the plugin files to `/wp-content/plugins/animated-gutenberg-gallery-lite`
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. Create a gallery block in any post or page - animations will be automatically applied
 
 ## Requirements
-- WordPress 5.0 or higher
-- PHP 7.4 or higher
+- WordPress 6.4 or higher
+- PHP 7.0 or higher
 - Modern browsers supporting CSS3 animations
 
-## Usage
-1. Create a gallery block in WordPress
-2. The animations will be automatically applied
-3. Customize settings in the AG Gallery settings page
+## Frequently Asked Questions
 
-    ## Structure
-```
-animated-gutenberg-gallery/
-├── assets/                 # Frontend resources
-│   ├── css/                # Stylesheets
-│   │   ├── agg-admin.css   # Admin styles
-│   │   └── agg-public.css  # Public styles
-│   ├── js/                 # JavaScript files
-│   │   ├── agg-admin.js    # Admin scripts
-│   │   └── agg-public.js   # Public scripts
-│   │   └── agg-editor.js   # Gutenberg block scripts
-│   └── images/             # Images and icons
-├── includes/               # PHP classes
-│   ├── admin/              # Admin functionality
-│   │   ├── class-agg-admin.php
-│   │   └── views/
-│   ├── core/               # Core functionality
-│   │   ├── class-agg-activator.php
-│   │   ├── class-agg-assets.php
-│   │   └── ...
-│   └── frontend/           # Frontend functionality
-├── languages/              # Translations
-└── animated-gutenberg-gallery.php
-```
+### How do I use the plugin?
+Simply create a gallery block in the WordPress editor - the animations will be automatically applied.
 
-## Licensing  
-This plugin is sold under a **Commercial License** and requires a valid **Freemius license key** for activation.  
+### Can I customize the animation speed?
+The lite version comes with a fixed animation duration of 0.5 seconds. For customizable animation duration, please consider upgrading to the premium version.
 
-### **License Types**  
-- **Single-Site License:** Use on **1 website**  
-- **Three-Site License:** Use on **up to 3 websites**  
-- **Annual License:** Includes **1 year of updates & support** (must renew to continue receiving updates).  
-- **Lifetime License:** Includes **lifetime updates & support** (one-time payment).  
-
-🔹 Your license can be **managed in your account** at [Matysiewicz Studio](matysiewicz.studio/account/#!/licenses)  
-🔹 Licenses can be **moved between sites** via the **Freemius dashboard**.  
-
-📜 **Read full license terms in LICENSE.txt**  
+### Can I change the animation type?
+The lite version includes the fade-in animation. For additional animation types, please check out our premium version.
 
 ## Support
 For support inquiries:
 - Email: support@matysiewicz.studio
 - Website: https://matysiewicz.studio
 
-## Version History
-- 1.2.6: Load same animations on frontend and backend
-- 1.2.5: Alternate Scroll bug fix
-- 1.2.4: Added Animation Style
-- 1.2.3: Litespeed Cache image lazy load compatibility added
-- 1.2.2: Added Lenis Scroll and scroll effect
-- 1.2.1: Added branding
-- 1.2.0: Lightbox works asynchronously with fade animations
-- 1.0.9: Removed effects on single images
-- 1.0.8: Added Switcher on/off to Galleries
-- 1.0.7: Added lazy load animation, 
-- 1.0.6: Added Compatibility with Polylang and WPML
-- 1.0.5: Added CSS fixes
-- 1.0.4: Added Live Preview
-- 1.0.3: Added Hover Effects
-- 1.0.2: Added Animation Effects
-- 1.0.1: Added Lightbox Functionality
-- 1.0.0: Initial release
-
-## Credits
-Created by Matysiewicz Studio
-Copyright (c) 2024 Matysiewicz Studio
+## Changelog
+= 1.0.0 =
+* Initial release with fade animation and lightbox functionality
