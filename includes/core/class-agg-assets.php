@@ -11,16 +11,16 @@ class AGG_Assets {
         // Register GSAP
         wp_enqueue_script(
             'gsap',
-            'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
+            AGG_PLUGIN_URL . 'assets/vendor/gsap/gsap.min.js',
             [],
             '3.12.2',
             true
         );
-
-        // Register ScrollTrigger
+    
+        // Register ScrollTrigger from local files
         wp_enqueue_script(
             'gsap-scrolltrigger',
-            'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js',
+            AGG_PLUGIN_URL . 'assets/vendor/gsap/ScrollTrigger.min.js',
             ['gsap'],
             '3.12.2',
             true

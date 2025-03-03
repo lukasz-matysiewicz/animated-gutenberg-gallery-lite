@@ -21,9 +21,29 @@ $settings = wp_parse_args($settings, $default_settings);
 <div class="wrap agg-admin-wrap">
     <!-- Header Section -->
     <div class="agg-header">
-        <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/logo-agg.webp'); ?>" 
-             alt="<?php echo esc_attr__('Animated Gutenberg Gallery Logo', 'animated-gutenberg-gallery-lite'); ?>" 
-             class="agg-logo">
+            <?php
+        $image_attributes = array(
+            'class' => 'agg-logo',
+            'alt'   => esc_attr__('Animated Gutenberg Gallery Logo', 'animated-gutenberg-gallery-lite')
+        );
+                // If you have the image attachment ID
+        if (function_exists('attachment_url_to_postid')) {
+            $attachment_id = attachment_url_to_postid(AGG_PLUGIN_URL . 'assets/images/logo-agg.webp');
+            if ($attachment_id) {
+                echo wp_get_attachment_image($attachment_id, 'full', false, $image_attributes);
+            } else {
+                // Fallback if image is not in media library
+                <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/logo-agg.webp'); ?>" 
+                alt="<?php echo esc_attr__('Animated Gutenberg Gallery Logo', 'animated-gutenberg-gallery-lite'); ?>" 
+                class="agg-logo">
+            }
+        } else {
+            // Fallback for older WordPress versions
+            <img src="<?php echo esc_url(AGG_PLUGIN_URL . 'assets/images/logo-agg.webp'); ?>" 
+            alt="<?php echo esc_attr__('Animated Gutenberg Gallery Logo', 'animated-gutenberg-gallery-lite'); ?>" 
+            class="agg-logo">
+        }
+        ?>
         <h1 class="agg-admin-title"><?php esc_html_e('Animated Gutenberg Gallery Lite', 'animated-gutenberg-gallery-lite'); ?></h1>
     </div>
 
@@ -70,7 +90,7 @@ $settings = wp_parse_args($settings, $default_settings);
                            <button type="button" 
                                     class="agg-button <?php echo esc_attr($active_class . ' ' . $premium_class); ?>"
                                     data-value="<?php echo esc_attr($value); ?>"
-                                    <?php echo $disabled; ?>>
+                                    <?php echo esc_attr($disabled); ?>
                                 <?php echo esc_html($effect['label']); ?>
                                 <?php if ($is_premium) : ?>
                                     <span class="agg-premium-badge"><?php esc_html_e('PRO', 'animated-gutenberg-gallery-lite'); ?></span>
@@ -104,7 +124,7 @@ $settings = wp_parse_args($settings, $default_settings);
                             <button type="button" 
                                     class="agg-button <?php echo esc_attr($active_class . ' ' . $premium_class); ?>"
                                     data-value="<?php echo esc_attr($value); ?>"
-                                    <?php echo $disabled; ?>>
+                                    <?php echo esc_attr($disabled); ?>
                                 <?php echo esc_html($style['label']); ?>
                                 <?php if ($is_premium) : ?>
                                     <span class="agg-premium-badge"><?php esc_html_e('PRO', 'animated-gutenberg-gallery-lite'); ?></span>
@@ -191,10 +211,12 @@ $settings = wp_parse_args($settings, $default_settings);
     <footer class="agg-footer">
         <p>
             <?php 
-            printf(
-                __('Need help? Contact support at %s', 'animated-gutenberg-gallery-lite'),
-                '<a href="mailto:support@matysiewicz.studio">support@matysiewicz.studio</a>'
-            );
+                // translators: %s is an HTML link to the support email address
+                echo sprintf(
+                    /* translators: %s is an HTML link to the support email address */
+                    esc_html__('Need help? Contact support at %s', 'animated-gutenberg-gallery-lite'),
+                    '<a href="mailto:support@matysiewicz.studio">support@matysiewicz.studio</a>'
+                );
             ?>
         </p>
     </footer>

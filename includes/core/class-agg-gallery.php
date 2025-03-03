@@ -64,7 +64,9 @@ class AGG_Gallery {
 
             return $block_content;
         } catch (\Exception $e) {
-            error_log('AGG Gallery Block Modification Error: ' . $e->getMessage());
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                // error_log('AGG Gallery Block Modification Error: ' . $e->getMessage());
+            }
             return $block_content;
         }
     }

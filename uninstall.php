@@ -11,6 +11,5 @@ delete_option('agg_version');
 // Clean up any transients
 delete_transient('agg_cache');
 
-// Clean up post meta if any
-global $wpdb;
-$wpdb->delete($wpdb->postmeta, ['meta_key' => 'agg_gallery_settings']);
+// Better approach for cleaning post meta
+delete_metadata('post', 0, 'agg_gallery_settings', '', true);
