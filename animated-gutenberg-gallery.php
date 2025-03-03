@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Animated Gutenberg Gallery Lite
- * Plugin URI: https://matysiewicz.studio/animated-gutenberg-gallery
+ * Plugin URI: https://matysiewicz.studio/wordpress-plugins/animated-gutenberg-gallery/
  * Description: Add beautiful animations to Gutenberg gallery blocks. Lite version.
  * Version: 1.0.0
  * Author: Matysiewicz Studio
