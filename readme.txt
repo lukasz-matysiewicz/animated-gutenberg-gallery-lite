@@ -28,7 +28,7 @@ Transform your WordPress gallery blocks with smooth fade-in animations and light
 - Hover effects (Zoom, Lift Up, 3D Tilt)
 - Priority support
 
-[Get Premium Version](https://matysiewicz.studio/animated-gutenberg-gallery)
+[Get Premium Version](https://matysiewicz.studio/wordpress-plugins/animated-gutenberg-gallery/)
 
 ## Installation
 1. Upload the plugin files to `/wp-content/plugins/animated-gutenberg-gallery-lite`
@@ -43,7 +43,7 @@ Transform your WordPress gallery blocks with smooth fade-in animations and light
 ## Frequently Asked Questions
 
 ### How do I use the plugin?
-Simply create a gallery block in the WordPress editor - the animations will be automatically applied.
+Simply create a Gutenberg gallery block in the WordPress editor and add images in it - the animations will be automatically applied.
 
 ### Can I customize the animation speed?
 The lite version comes with a fixed animation duration of 0.5 seconds. For customizable animation duration, please consider upgrading to the premium version.
