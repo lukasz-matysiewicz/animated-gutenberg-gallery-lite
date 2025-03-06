@@ -2,7 +2,7 @@
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.0
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPL v2 or later
 
 # Animated Gutenberg Gallery Lite
