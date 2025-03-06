@@ -1,7 +1,7 @@
 <?php
 namespace AGGL\Core;
 
-class AGG_Assets {
+class AGGL_Assets {
     public function __construct() {
         add_action('wp_enqueue_scripts', [$this, 'register_assets']);
         add_action('admin_enqueue_scripts', [$this, 'register_admin_assets']);
@@ -11,7 +11,7 @@ class AGG_Assets {
         // Register GSAP
         wp_enqueue_script(
             'gsap',
-            AGG_PLUGIN_URL . 'assets/vendor/gsap/gsap.min.js',
+            AGG_PLUGIN_URL . 'assets/js/vendor/gsap.min.js',
             [],
             '3.12.2',
             true
@@ -20,7 +20,7 @@ class AGG_Assets {
         // Register ScrollTrigger from local files
         wp_enqueue_script(
             'gsap-scrolltrigger',
-            AGG_PLUGIN_URL . 'assets/vendor/gsap/ScrollTrigger.min.js',
+            AGG_PLUGIN_URL . 'assets/js/vendor/ScrollTrigger.min.js',
             ['gsap'],
             '3.12.2',
             true
@@ -30,7 +30,7 @@ class AGG_Assets {
         $settings = get_option('agg_settings', array(
             'animation_type' => 'fade',
             'animation_style' => 'group',
-            'animation_duration' => 1.5,
+            'animation_duration' => 0.5,
             'hover_effect' => 'none'
         ));
 
@@ -56,7 +56,7 @@ class AGG_Assets {
     }
 
     public function register_admin_assets($hook) {
-        if (strpos($hook, 'animated-gutenberg-gallery-lite') !== false) {
+        if (strpos($hook, 'animated-g-gallery-lite') !== false) {
             // Admin styles
             wp_enqueue_style(
                 'agg-admin',
@@ -76,10 +76,10 @@ class AGG_Assets {
 
             // Localize script for premium features
             wp_localize_script('agg-admin', 'aggL10n', array(
-                'upgradeTitle' => __('Upgrade to Premium', 'animated-gutenberg-gallery-lite'),
-                'upgradeMessage' => __('Get access to more animations and effects!', 'animated-gutenberg-gallery-lite'),
-                'upgradeButton' => __('Learn More', 'animated-gutenberg-gallery-lite'),
-                'premiumUrl' => 'https://matysiewicz.studio/animated-gutenberg-gallery'
+                'upgradeTitle' => __('Upgrade to Premium', 'animated-g-gallery-lite'),
+                'upgradeMessage' => __('Get access to more animations and effects!', 'animated-g-gallery-lite'),
+                'upgradeButton' => __('Learn More', 'animated-g-gallery-lite'),
+                'premiumUrl' => 'https://agg.matysiewicz.studio/'
             ));
         }
     }

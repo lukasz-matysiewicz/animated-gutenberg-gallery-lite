@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name: Animated Gutenberg Gallery Lite
- * Plugin URI: https://matysiewicz.studio/wordpress-plugins/animated-gutenberg-gallery/
+ * Plugin Name: Animated G. Gallery Lite
+ * Plugin URI: https://agg.matysiewicz.studio
  * Description: Add beautiful animations to Gutenberg gallery blocks. Lite version.
- * Version: 1.0.0
+ * Version: 1.0.3
  * Author: Matysiewicz Studio
  * Author URI: https://matysiewicz.studio
  * License: GPL v2 or later
- * Text Domain: animated-gutenberg-gallery-lite
+ * Text Domain: animated-g-gallery-lite
  * Domain Path: /languages
  * 
- * @package AnimatedGutenbergGallery
+ * @package Animated-G-Gallery
  * @author Matysiewicz Studio
  * @copyright Copyright (c) 2025, Matysiewicz Studio
  */
@@ -21,7 +21,7 @@ if (!defined('WPINC')) {
 }
 
 // Plugin constants
-define('AGG_VERSION', '1.0.0');
+define('AGG_VERSION', '1.0.3');
 define('AGG_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AGG_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AGG_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -34,6 +34,7 @@ require_once AGG_PLUGIN_DIR . 'includes/core/class-agg-gallery.php';
 require_once AGG_PLUGIN_DIR . 'includes/core/class-agg-activator.php';
 require_once AGG_PLUGIN_DIR . 'includes/admin/class-agg-admin.php';
 require_once AGG_PLUGIN_DIR . 'includes/core/class-agg-init.php';
+require_once AGG_PLUGIN_DIR . 'includes/frontend/class-agg-public.php';
 
 // Simple activation hook
 register_activation_hook(__FILE__, function() {
@@ -45,8 +46,9 @@ register_deactivation_hook(__FILE__, 'flush_rewrite_rules');
 
 
 // Initialize plugin
-function run_animated_gutenberg_gallery() {
-    $plugin = new AGGL\Core\AGG_Init();
+function run_animated_g_gallery() {
+    $plugin = new AGGL\Core\AGGL_Init();
     $plugin->run();
 }
-run_animated_gutenberg_gallery();
+run_animated_g_gallery();
+

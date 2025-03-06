@@ -1,7 +1,7 @@
 <?php
 namespace AGGL\Core;
 
-class AGG_Gallery {
+class AGGL_Gallery {
     public function __construct() {
         // Block modifications
         add_filter('render_block', [$this, 'modify_gallery_block'], 10, 2);
@@ -21,7 +21,7 @@ class AGG_Gallery {
         $defaults = array(
             'animation_type' => 'fade',
             'animation_style' => 'group',
-            'animation_duration' => 0.1,
+            'animation_duration' => 0.5,
             'hover_effect' => 'none',
             'lightbox' => true,
             'animations' => true
@@ -36,44 +36,55 @@ class AGG_Gallery {
         return wp_parse_args($settings, $defaults);
     }
 
-    public function modify_gallery_block($block_content, $block) {
-        if ($block['blockName'] !== 'core/gallery') {
-            return $block_content;
-        }
+    // In class-agg-gallery.php, update the modify_gallery_block function:
 
-        try {
-            $settings = $this->get_settings();
-            
-            $classes = ['agg-gallery'];
-            if ($settings['lightbox']) $classes[] = 'agg-lightbox';
-            if ($settings['animations']) $classes[] = 'agg-animated';
-
-            // Add data attributes for settings
-            $data_attrs = sprintf(
-                'data-agg-lightbox="%s" data-agg-animations="%s"',
-                esc_attr($settings['lightbox'] ? 'true' : 'false'),
-                esc_attr($settings['animations'] ? 'true' : 'false')
-            );
-
-            // Add classes and data attributes to gallery wrapper
-            $block_content = preg_replace(
-                '/<figure([^>]*?)class="([^"]*)"/',
-                '<figure$1class="$2 ' . implode(' ', $classes) . '" ' . $data_attrs,
-                $block_content
-            );
-
-            return $block_content;
-        } catch (\Exception $e) {
-            if (defined('WP_DEBUG') && WP_DEBUG) {
-                // error_log('AGG Gallery Block Modification Error: ' . $e->getMessage());
-            }
-            return $block_content;
-        }
+public function modify_gallery_block($block_content, $block) {
+    // Check for both gallery block names as they may vary in different WP versions
+    if ($block['blockName'] !== 'core/gallery' && $block['blockName'] !== 'core/group') {
+        return $block_content;
     }
+    
+    // For core/group blocks, check if it contains gallery-related classes
+    if ($block['blockName'] === 'core/group' && 
+        (!isset($block['attrs']['className']) || 
+         strpos($block['attrs']['className'], 'gallery') === false)) {
+        return $block_content;
+    }
+
+    try {
+        $settings = $this->get_settings();
+        
+        $classes = ['agg-gallery'];
+        if ($settings['lightbox']) $classes[] = 'agg-lightbox';
+        if ($settings['animations']) $classes[] = 'agg-animated';
+
+        // Add data attributes for settings
+        $data_attrs = sprintf(
+            'data-agg-lightbox="%s" data-agg-animations="%s"',
+            esc_attr($settings['lightbox'] ? 'true' : 'false'),
+            esc_attr($settings['animations'] ? 'true' : 'false')
+        );
+
+        // Add classes and data attributes to gallery wrapper
+        // Updated pattern to be more flexible with different HTML structures
+        $block_content = preg_replace(
+            '/<(figure|div)([^>]*?)class="([^"]*)"/',
+            '<$1$2class="$3 ' . implode(' ', $classes) . '" ' . $data_attrs,
+            $block_content
+        );
+
+        return $block_content;
+    } catch (\Exception $e) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            // error_log('AGG Gallery Block Modification Error: ' . $e->getMessage());
+        }
+        return $block_content;
+    }
+}
 
     public function add_editor_settings($settings) {
         $plugin_settings = $this->get_settings();
-        $settings['aggSettingsUrl'] = admin_url('admin.php?page=animated-gutenberg-gallery-lite');
+        $settings['aggSettingsUrl'] = admin_url('admin.php?page=animated-g-gallery-lite');
         $settings['aggDefaults'] = [
             'lightbox' => true,
             'animations' => true,

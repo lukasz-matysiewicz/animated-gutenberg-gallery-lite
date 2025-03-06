@@ -1,7 +1,7 @@
 # Copyright (C) 2024 Matysiewicz Studio
 msgid ""
 msgstr ""
-"Project-Id-Version: Animated Gutenberg Gallery 1.0.0\n"
+"Project-Id-Version: Animated G. Gallery 1.0.0\n"
 "Report-Msgid-Bugs-To: https://matysiewicz.studio\n"
 "POT-Creation-Date: 2024-11-14\n"
 "MIME-Version: 1.0\n"

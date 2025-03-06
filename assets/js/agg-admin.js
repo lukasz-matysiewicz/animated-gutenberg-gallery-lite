@@ -2,7 +2,9 @@
     'use strict';
     
     document.addEventListener('DOMContentLoaded', function() {
+        console.log('Admin JS loaded');
         const buttonGroups = document.querySelectorAll('.agg-button-group');
+        console.log('Button groups found:', buttonGroups.length);
 
         function showUpgradeModal() {
             const modalHtml = `

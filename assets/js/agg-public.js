@@ -5,6 +5,11 @@
         // Initialize galleries with fade animation
         const animatedGalleries = document.querySelectorAll('.wp-block-gallery.agg-animated');
         
+        // Check if aggSettings is defined and has animation_duration
+        const animationDuration = (typeof aggSettings !== 'undefined' && 
+                                  typeof aggSettings.animation_duration !== 'undefined') ? 
+                                  parseFloat(aggSettings.animation_duration) : 0.5;
+
         animatedGalleries.forEach(gallery => {
             const figures = gallery.querySelectorAll('figure.wp-block-image');
             
@@ -12,10 +17,10 @@
                 // Set initial state
                 gsap.set(figure, { opacity: 0 });
                 
-                // Create animation
+                // Create animation with proper duration
                 gsap.to(figure, {
                     opacity: 1,
-                    duration: 0.1,
+                    duration: animationDuration, // Use the properly defined variable
                     scrollTrigger: {
                         trigger: figure,
                         start: "top bottom+=100",

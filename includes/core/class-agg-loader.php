@@ -1,7 +1,7 @@
 <?php
 namespace AGGL\Core;
 
-class AGG_Loader {
+class AGGL_Loader {
     protected $actions;
     protected $filters;
 

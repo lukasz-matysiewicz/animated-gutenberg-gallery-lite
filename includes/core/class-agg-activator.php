@@ -1,12 +1,12 @@
 <?php
-namespace AGG\Core;
+namespace AGGL\Core;
 
-class AGG_Activator {
+class AGGL_Activator {
     public static function activate() {
         $default_options = array(
             'animation_type' => 'fade',
             'animation_style' => 'group',
-            'animation_duration' => 1.5,
+            'animation_duration' => 0.5,
             'hover_effect' => 'none'
         );
 

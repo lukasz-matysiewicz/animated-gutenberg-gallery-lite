@@ -23,9 +23,9 @@ const withGalleryControls = createHigherOrderComponent((BlockEdit) => {
                 null,
                 wp.element.createElement(
                     PanelBody,
-                    { title: __('Gallery Effects', 'animated-gutenberg-gallery-lite') },
+                    { title: __('Gallery Effects', 'animated-g-gallery-lite') },
                     wp.element.createElement(ToggleControl, {
-                        label: __('Enable Lightbox', 'animated-gutenberg-gallery-lite'),
+                        label: __('Enable Lightbox', 'animated-g-gallery-lite'),
                         checked: lightboxEnabled,
                         onChange: (value) => setAttributes({ aggLightbox: value })
                     })
