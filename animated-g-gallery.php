@@ -3,7 +3,7 @@
  * Plugin Name: Animated G. Gallery Lite
  * Plugin URI: https://agg.matysiewicz.studio
  * Description: Add beautiful animations to Gutenberg gallery blocks. Lite version.
- * Version: 1.0.3
+ * Version: 1.0.4
  * Author: Matysiewicz Studio
  * Author URI: https://matysiewicz.studio
  * License: GPL v2 or later
@@ -21,7 +21,7 @@ if (!defined('WPINC')) {
 }
 
 // Plugin constants
-define('AGG_VERSION', '1.0.3');
+define('AGG_VERSION', '1.0.4');
 define('AGG_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AGG_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('AGG_PLUGIN_BASENAME', plugin_basename(__FILE__));

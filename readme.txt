@@ -57,6 +57,9 @@ For support inquiries:
 
 ## Changelog
 
+= 1.0.4 =
+* sanitize fix
+
 = 1.0.3 =
 * rename changes
 
