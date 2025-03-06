@@ -52,8 +52,27 @@ class AGGL_Admin {
             30
         );
     }
+    public function register_settings() {
+        // Register setting with string callback
+        register_setting(
+            'agg_options',              // Option group
+            'agg_settings',             // Option name
+            'AGGL\Admin\AGGL_Admin::sanitize_settings_static' // Use string callback
+        );
+        
+        // Add filter for default value separately
+        add_filter('default_option_agg_settings', function() {
+            return array(
+                'animation_type' => 'fade',
+                'animation_style' => 'group',
+                'animation_duration' => 1.5,
+                'hover_effect' => 'none'
+            );
+        });
+    }
+    
     /**
-     * Sanitize settings before saving to database
+     * Static sanitization callback for settings
      * 
      * This method enforces fixed values for the lite version of the plugin
      * and ensures that no user input can modify these predetermined settings.
@@ -62,8 +81,7 @@ class AGGL_Admin {
      * @return array Sanitized settings with predefined values
      * @since 1.0.0
      */   
-    
-     public function sanitize_settings_instance($input) {
+    public static function sanitize_settings_static($input) {
         try {
             $sanitized = [];
             
@@ -88,29 +106,13 @@ class AGGL_Admin {
                 'agg_settings_error',
                 esc_html__('Error saving settings. Please try again.', 'animated-g-gallery-lite')
             );
-            return get_option('agg_settings');
+            return get_option('agg_settings', [
+                'animation_type' => 'fade',
+                'animation_style' => 'group',
+                'animation_duration' => 0.5,
+                'hover_effect' => 'none'
+            ]);
         }
-    }
-    public static function sanitize_settings($input) {
-        $admin = new self();
-        return $admin->sanitize_settings_instance($input);
-    }
-
-    public function register_settings() {
-
-        register_setting(
-            'agg_options',
-            'agg_settings',
-            [
-                'type' => 'array',
-                'sanitize_callback' => [$this, 'sanitize_settings_instance'],
-                'default' => [
-                    'animation_type' => 'fade',
-                    'animation_duration' => 1.5,
-                    'hover_effect' => 'none'
-                ]
-            ]
-        );
     }
 
     public function display_plugin_admin_page() {
